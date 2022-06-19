@@ -25,7 +25,7 @@ pipeline {
         stage ('Building Docker image and pushing to Docker hub') {
             steps {
             sh '''
-            "sudo sh docker_deploy.sh"
+            "sh docker_deploy.sh"
             '''
             }
         }  
