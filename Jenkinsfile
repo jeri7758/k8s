@@ -6,11 +6,11 @@ pipeline {
     }
 
     environment {
-        dockerhub= credentials('dockerhub')
-        CREDENTIALS_ID= 'kubernetes'
-        PROJECT_ID= 'fifth-mechanism-345915'
-        CLUSTER_NAME= 'cluster-1'
-        LOCATION= 'us-central1-c'
+        dockerhub = credentials('dockerhub')
+        CREDENTIALS_ID = 'kubernetes'
+        PROJECT_ID = 'fifth-mechanism-345915'
+        CLUSTER_NAME = 'cluster-1'
+        LOCATION = 'us-central1-c'
     }
 
     options{
@@ -53,6 +53,7 @@ pipeline {
             sed -i 's|tagname|${BUILD_ID}|g' deployment.yaml
             """
                 step([$class: 'KubernetesEngineBuilder', projectId: PROJECT_ID, clusterName: CLUSTER_NAME, location: LOCATION, manifestPattern: 'deployment.yaml', credentialsId: CREDENTIALS_ID, verifyDeployments: true ])
+                step([$class: 'KubernetesEngineBuilder', projectId: PROJECT_ID, clusterName: CLUSTER_NAME, location: LOCATION, manifestPattern: 'service.yaml', credentialsId: CREDENTIALS_ID, verifyDeployments: true ])
             echo "deployment completed......"
             }
         }
