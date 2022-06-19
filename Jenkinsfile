@@ -38,8 +38,6 @@ pipeline {
         stage ('Pushing to Docker hub') {
             steps {
             sh '''
-            echo $dockerhub_USR
-            echo $dockerhub_PSW
             echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:latest
             '''
             }
