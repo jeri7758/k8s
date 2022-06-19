@@ -42,7 +42,7 @@ pipeline {
         stage ('Pushing to Docker hub') {
             steps {
             sh '''
-            docker image tag jerijs/kub_project:latest jerijs/kub_project:${env.BUILD_ID}
+            docker image tag jerijs/kub_project:latest jerijs/kub_project:${BUILD_ID}
             echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:${BUILD_ID}
             '''
             }
