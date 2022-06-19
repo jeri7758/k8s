@@ -1,2 +1,4 @@
 #!/bin/bash
-sed -i 's/tagname/44/g' deployment.yaml
+ssh -o StrictHostKeychecking=no jeri@34.93.4.5 \
+"sed -i 's/tagname/44/g' deployment.yaml && \
+sudo cp -av deployment.yaml /var/lib/jenkins/workspace/kub_test/deployment.yaml"
