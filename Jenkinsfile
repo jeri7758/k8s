@@ -5,6 +5,10 @@ pipeline {
         string(name: 'SERVER_IP', defaultValue: '34.93.4.5', description: 'Provide IP Address.')
     }
 
+    environment {
+        dockerhub=credentials('dockerhub')
+    }
+
     options{
         skipStagesAfterUnstable()
     }
@@ -22,14 +26,22 @@ pipeline {
             }
         }
 
-        stage ('Building Docker image and pushing to Docker hub') {
+        stage ('Building Docker image') {
             steps {
             sh 'pwd'
             sh '''
             "./docker_deploy.sh"
             '''
             }
-        }  
+        }
+
+        stage ('Pushing to Docker hub') {
+            steps {
+            sh '''
+            ssh -o StrictHostKeychecking=no jeri@34.93.4.5 'echo $dockerhub_PSW | docker login -u dockerhub_USR --password-stdin && docker push jerijs/kub_project:latest'
+            '''
+            }
+        }
     }
 }
 
