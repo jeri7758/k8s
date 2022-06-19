@@ -38,6 +38,8 @@ pipeline {
         stage ('Pushing to Docker hub') {
             steps {
             sh '''
+            docker_version=$(docker images | grep "jerijs/kub_project" | wc -l)
+            docker image tag jerijs/kub_project:latest jerijs/kub_project:V$docker_version
             echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:latest
             '''
             }
