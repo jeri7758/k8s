@@ -6,7 +6,11 @@ pipeline {
     }
 
     environment {
-        dockerhub=credentials('dockerhub')
+        dockerhub= credentials('dockerhub')
+        kubernetes= credentials('kubernetes')
+        PROJECT_ID= 'fifth-mechanism-345915'
+        CLUSTER_NAME= 'cluster-1'
+        LOCATION= 'us-central1-c'
     }
 
     options{
@@ -38,9 +42,18 @@ pipeline {
         stage ('Pushing to Docker hub') {
             steps {
             sh '''
-            docker_version=$(docker images | grep "jerijs/kub_project" | wc -l)
-            docker image tag jerijs/kub_project:latest jerijs/kub_project:V$docker_version
-            echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:V$docker_version && docker push jerijs/kub_project:latest
+            docker image tag jerijs/kub_project:latest jerijs/kub_project:${env.BUILD_ID}
+            echo $env.dockerhub_PSW | docker login -u $env.dockerhub_USR --password-stdin && docker push jerijs/kub_project:${env.BUILD_ID}
+            '''
+            }
+        }
+        stage ('Pushing to Docker hub') {
+            steps {
+            sh 'pwd'
+            sh 'ls -ltr'
+            sh '''
+            "sed -i 's/tagname/${env.BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernettestingBuilder', projectId: env.PROJECT_ID, clustername: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern:deployment.yaml, credentials:env.kubernetes, verifyDeployments: true ])
             '''
             }
         }
