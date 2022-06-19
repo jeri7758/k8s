@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         dockerhub= credentials('dockerhub')
-        kubernetes= credentials('kubernetes')
+        CREDENTIALS_ID= 'kubernetes'
         PROJECT_ID= 'fifth-mechanism-345915'
         CLUSTER_NAME= 'cluster-1'
         LOCATION= 'us-central1-c'
