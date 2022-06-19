@@ -26,7 +26,7 @@ pipeline {
             steps {
             sh 'pwd'
             sh '''
-            "sh docker_deploy.sh"
+            "./docker_deploy.sh"
             '''
             }
         }  
