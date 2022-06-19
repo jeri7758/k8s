@@ -24,7 +24,7 @@ pipeline {
 
         stage ('Building Docker image and pushing to Docker hub') {
             steps {
-            sh 'PWD'
+            sh 'pwd'
             sh '''
             "sh docker_deploy.sh"
             '''
