@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-web1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web1
+  template:
+    metadata:
+      labels:
+        app: web1
+    spec:
+      containers:
+      - name: myapp
+        # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
+        # Replace $GCLOUD_PROJECT with your project ID.
+        image: jerijs/kub_project:latest
+        # This app listens on port 80 for web traffic by default.
+        ports:
+        - containerPort: 80
+        env:
+          - name: PORT
+            value: "80"
+---
