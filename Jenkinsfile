@@ -43,7 +43,7 @@ pipeline {
             steps {
             sh '''
             docker image tag jerijs/kub_project:latest jerijs/kub_project:${env.BUILD_ID}
-            echo $env.dockerhub_PSW | docker login -u $env.dockerhub_USR --password-stdin && docker push jerijs/kub_project:${env.BUILD_ID}
+            echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:${env.BUILD_ID}
             '''
             }
         }
