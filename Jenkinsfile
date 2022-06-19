@@ -51,7 +51,7 @@ pipeline {
             steps {
             sh 'pwd'
             sh 'ls -ltr'
-            sh "cd k8s && sed -i 's#tagname#$BUILD_ID#g' deployment.yaml"
+            sh "cd k8s && sed -i 's#tagname#$BUILD_ID#g' 'deployment.yaml'"
                 step([$class: 'KubernetesEngineBuilder', projectId: PROJECT_ID, clustername: CLUSTER_NAME, location: LOCATION, manifestPattern: deployment.yaml, credentials: kubernetes, verifyDeployments: true ])
             echo "deployment completed......"
             }
