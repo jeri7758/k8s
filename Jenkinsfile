@@ -38,7 +38,7 @@ pipeline {
         stage ('Pushing to Docker hub') {
             steps {
             sh '''
-            ssh -o StrictHostKeychecking=no jeri@34.93.4.5 'docker login -u $dockerhub_USR -p $dockerhub_PSW && docker push jerijs/kub_project:latest'
+            ssh -o StrictHostKeychecking=no jeri@34.93.4.5 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
             '''
             }
         }
