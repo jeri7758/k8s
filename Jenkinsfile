@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('Checking Docker is installed') {
+        stage('Checking Docker is installed on server') {
             steps{
             sh 'docker --version'                       
             }
