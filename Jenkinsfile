@@ -47,7 +47,7 @@ pipeline {
             '''
             }
         }
-        stage ('Pushing to Docker hub') {
+        stage ('Starting Deployment') {
             steps {
             sh 'pwd'
             sh 'ls -ltr'
@@ -55,6 +55,7 @@ pipeline {
             "sed -i 's/tagname/${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernettestingBuilder', projectId: env.PROJECT_ID, clustername: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern:deployment.yaml, credentials:env.kubernetes, verifyDeployments: true ])
             '''
+            echo "deployment completed......"
             }
         }
     }
