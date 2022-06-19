@@ -24,7 +24,7 @@ pipeline {
 
         stage ('Building Docker image and pushing to Docker hub') {
             steps {
-            sh 'ssh -o StrictHostKeychecking=no jeri@ docker_deploy.sh'
+            sh 'ssh -o StrictHostKeychecking=no jeri@${SERVER_IP} docker_deploy.sh'
             }
         }  
     }
