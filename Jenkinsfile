@@ -49,9 +49,9 @@ pipeline {
         }
         stage ('Starting Deployment') {
             steps {
-            sh '''
-            "./kub_deploy.sh"
-            '''
+            sh """#!/bin/bash
+            sed -i 's|tagname|"${BUILD_ID}"|g' deployment.yaml
+            """
                 step([$class: 'KubernetesEngineBuilder', projectId: PROJECT_ID, clustername: CLUSTER_NAME, location: LOCATION, manifestPattern: deploy.yaml, credentials: kubernetes, verifyDeployments: true ])
             echo "deployment completed......"
             }
