@@ -43,7 +43,7 @@ pipeline {
             steps {
             sh '''
             docker image tag jerijs/kub_project:latest jerijs/kub_project:${env.BUILD_ID}
-            echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:${env.BUILD_ID}
+            echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin && docker push jerijs/kub_project:${BUILD_ID}
             '''
             }
         }
@@ -52,8 +52,8 @@ pipeline {
             sh 'pwd'
             sh 'ls -ltr'
             sh '''
-            "sed -i 's/tagname/${env.BUILD_ID}/g' deployment.yaml"
-                step([$class: 'KubernettestingBuilder', projectId: env.PROJECT_ID, clustername: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern:deployment.yaml, credentials:env.kubernetes, verifyDeployments: true ])
+            "sed -i 's/tagname/${BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernettestingBuilder', projectId: PROJECT_ID, clustername: CLUSTER_NAME, location: LOCATION, manifestPattern: deployment.yaml, credentials: kubernetes, verifyDeployments: true ])
             '''
             echo "deployment completed......"
             }
